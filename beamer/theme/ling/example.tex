@@ -1,0 +1,192 @@
+\documentclass{beamer}
+
+\mode<presentation>{\usetheme{ling}}
+
+\title{Normal Distribution}
+\subtitle{One of the Most Beloved Probability Distributions}
+\author{Pengji Zhang}
+\institute{Carnegie Mellon University}
+\date{November 2019}
+
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmainfont{Libertinus Serif}
+\setsansfont{Libertinus Sans}[Scale=MatchLowercase]
+\setmonofont{Source Code Pro}[Scale=MatchLowercase]
+\setmathfont{TeX Gyre Pagella Math}
+
+\usepackage{pgfplots}
+\pgfmathdeclarefunction{normal}{3}{%
+  \pgfmathparse{1/(#3*sqrt(2*pi))*exp(-((#1-#2)^2)/(2*#3^2))}} % chktex 36
+
+\AtBeginSubsection[]{%
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage{}
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Introduction}
+
+\subsection{Definition}
+
+\begin{frame}{Definition}
+  Normal distribution (or sometimes Gaussian distribution) is a continuous
+  probability distribution.
+  \begin{itemize}
+  \item<1-> The density function is
+    \begin{equation}
+      f(x) = -\frac{1}{\sigma\sqrt{2\pi}}\exp\left\{ -\frac{{\left( x - \mu
+            \right)}^{2}}{2\sigma^{2}} \right\}.
+    \end{equation}
+  \item<2-> Parameterized by \(\mu\)---the mean value, and \(\sigma\)---the
+    standard deviation of the random variable.
+  \end{itemize}
+\end{frame}
+
+\subsection{Standard normal distribution}
+
+\begin{frame}{Standard normal distribution}
+  When \(\mu = 0\) and \(\sigma = 1\), the distribution is called
+  \emph{standard normal distribution}, whose density function is
+  \begin{equation}
+    f(x) = -\frac{1}{\sqrt{2\pi}}\exp\left\{ -\frac{x^{2}}{2} \right\}.
+  \end{equation}
+  \uncover<2->{With transformations of random variable, we can go from the
+    standard normal distribution to any normal distribution.
+    \begin{block}{From \(\mathcal{N}(0, 1)\) to
+        \(\mathcal{N}(\mu, \sigma^{2})\)}
+      Let \(Z \sim \mathcal{N}(0, 1)\), then
+      \begin{equation}
+        X = \sigma Z + \mu \sim \mathcal{N}(\mu, \sigma^{2}).
+      \end{equation}
+    \end{block}}
+\end{frame}
+
+\subsection{Normal density function}
+
+\begin{frame}{Density function}
+  \(\mu\) controls the position of the function, while \(\sigma\) controls the
+  shape.
+  \begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+        domain=-5:5,
+        samples=100,
+        ymin=0,
+        xlabel=\(x\),
+        ylabel=Density,
+        height=5cm,
+        width=10cm,
+        legend pos=north west,
+        legend style={draw=none,fill=none}]
+        \addplot[thick,red] {normal(x, 0, 1)};
+        \addlegendentry{\(\mathcal{N}(0, 1)\)}
+        \addplot[thick,blue] {normal(x, 0, 2)};
+        \addlegendentry{\(\mathcal{N}(0, 4)\)}
+        \addplot[thick,green!50!black] {normal(x, 1, 1)};
+        \addlegendentry{\(\mathcal{N}(1, 1)\)}
+      \end{axis}
+    \end{tikzpicture}
+    \caption{Probability density functions of normal distributions with
+      different values of parameters.}
+  \end{figure}
+\end{frame}
+
+\section{Properties}
+
+\subsection{Basic properties}
+
+\begin{frame}{Basic properties}
+  \(\mathcal{N}(\mu, \sigma^{2})\) has the following properties:
+  \begin{itemize}
+  \item<1-> Symmetric around its mean, median, and mode \(\mu\).
+  \item<2-> The density function is log-concave.
+  \item<3-> Infinitely differentiable, and supersmooth of order 2.
+  \item<4-> Moment generating function (MGF)
+    \begin{equation}
+      M(t) = \exp(\mu t)\exp\left( \frac{1}{2}\sigma^{2}t^{2} \right).
+    \end{equation}
+  \item<5-> Cumulative distribution function (CDF) is
+    \begin{equation}
+      \Phi(x) = \frac{1}{\sqrt{2\pi}}
+      \int_{-\infty}^{x}\exp\left(-\frac{t^{2}}{2}\right).
+    \end{equation}
+  \end{itemize}
+\end{frame}
+
+\subsection{Other properties}
+
+\begin{frame}{Other properties}
+  Here are other properties of normal distributions:
+  \begin{itemize}
+  \item<1-> If two random variables \(X\) and \(Y\) are jointly normal and
+    uncorrelated, then they are also independent.
+    \begin{alertblock}{Caveats}
+      Note the condition that \(X\) and \(Y\) are \emph{jointly normal} is
+      essential. In general uncorrelated random variables are not necessarily
+      independent.
+    \end{alertblock}
+  \item<2-> Fisher information matrix is
+    \begin{equation}
+      \mathcal{I} =
+      \begin{pmatrix}
+        \frac{1}{\sigma^{2}} & 0 \\
+        0 & \frac{1}{2\sigma^{4}}
+      \end{pmatrix}.
+    \end{equation}
+  \end{itemize}
+\end{frame}
+
+\subsection{Central Limit Theorem}
+
+\begin{frame}{Central Limit Theorem (CLT)}
+  Classical \emph{Central Limit Theorem} (CLT) states that the sample average of
+  \(n\) independent and identically distributed random variables
+  \(\{X_{1}, \ldots, X_{n}\}\) converges in distribution to some normal
+  distribution.
+  \begin{equation}
+    \sqrt{n}\left( \bar{X} - \mathbb{E}X_{1} \right) \xrightarrow{d}
+    \mathcal{N}\bigl(0, v(X_{1})\bigr).
+  \end{equation}
+
+  \uncover<2->{%
+    \begin{exampleblock}{Example}
+      Let \(X_{i} \sim \mathrm{Ber}(0.5)\), and \(\{X_{1}, \ldots, X_{100}\}\)
+      be a random sample. Then
+      \begin{equation}
+        10 ( \bar{X} - 0.5 ) \dot{\sim} \mathcal{N}(0, 0.25).
+      \end{equation}
+    \end{exampleblock}}
+\end{frame}
+
+\section*{Summary}
+
+\begin{frame}{Summary}
+  Normal distribution, one of the most beloved distributions:
+  \begin{itemize}
+  \item Nice and beautiful mathematical properties.
+  \item CLT makes it super important.
+  \end{itemize}
+
+  \uncover<2->{%
+    \vspace{2em}
+    \centering
+    \Large{Thanks! Questions?}}
+\end{frame}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

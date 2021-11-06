@@ -1,0 +1,41 @@
+% A minimal LaTeX Beamer theme
+
+\mode<presentation>
+
+%% Color
+\definecolor{ling@black}{HTML}{232344}
+\definecolor{ling@charcoal}{HTML}{392F41}
+\definecolor{ling@red}{HTML}{AA381E}
+\definecolor{ling@green}{HTML}{556B2F}
+\definecolor{ling@blue}{HTML}{065279}
+\definecolor{ling@silver}{HTML}{F0F1F2}
+\definecolor{ling@white}{HTML}{FCFAFD}
+
+\setbeamercolor{normal text}{fg=ling@charcoal,bg=ling@white}
+\setbeamercolor{alerted text}{fg=ling@red}
+\setbeamercolor{example text}{fg=ling@green}
+
+\setbeamercolor{structure}{fg=ling@black}
+\setbeamercolor{local structure}{fg=ling@black!50!white}
+\setbeamercolor{palette primary}{use=structure,fg=structure.fg}
+\setbeamercolor{palette secondary}{use=structure,fg=structure.fg!70!white}
+\setbeamercolor{palette tertiary}{use=structure,fg=structure.fg!50!white}
+\setbeamercolor{palette quaternary}{use=structure,fg=structure.fg!30!white}
+
+\setbeamercolor{block body}{bg=ling@silver}
+\setbeamercolor{block body alerted}{bg=ling@silver}
+\setbeamercolor{block body example}{bg=ling@silver}
+\setbeamercolor{block title}{bg=ling@silver}
+\setbeamercolor{block title alerted}{bg=ling@silver}
+\setbeamercolor{block title example}{bg=ling@silver}
+
+\setbeamercolor{item projected}{fg=ling@black,bg=ling@silver}
+
+%% Inner theme
+\setbeamertemplate{itemize items}{\(\bullet\)}
+
+%% Outer theme
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+
+\mode<all>
